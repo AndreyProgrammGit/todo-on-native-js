@@ -1,0 +1,116 @@
+body {
+  background-color: rgb(144, 190, 186);
+}
+
+.main {
+  margin: 0 auto;
+  width: 920px;
+  height: 100%;
+  border: 1px solid grey;
+  border-radius: 130px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  background-color: #fff;
+}
+
+.list {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  list-style-type: none;
+  padding: 0;
+}
+.list .list-item {
+  margin: 10px 0;
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.507);
+}
+.list .list-item .item {
+  width: 100%;
+  height: 50px;
+  padding: 0 20px;
+  font-size: 20px;
+}
+.list .list-item button {
+  margin: 10px;
+  padding: 5px;
+}
+.list .list-item .delete {
+  background-color: red;
+  border: 1px solid #000;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: bold;
+  color: #000;
+  cursor: pointer;
+}
+.list .list-item .delete:hover {
+  background-color: rgb(124, 8, 8);
+  color: #fff;
+}
+.list .list-item .complete {
+  background-color: green;
+  border: 1px solid #000;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: bold;
+  color: #000;
+  cursor: pointer;
+}
+.list .list-item .complete:hover {
+  background-color: greenyellow;
+  color: #fff;
+}
+.list .list-item .active {
+  background-color: greenyellow;
+  color: #fff;
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 50px;
+}
+.input-container #clear {
+  background-color: rgba(255, 0, 0, 0.211);
+  color: #fff;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+.input-container #clear:hover {
+  transform: translateY(-2px);
+  background-color: rgba(255, 0, 0, 0.5);
+  box-shadow: 1px 1px 10px rgb(255, 8, 49);
+  border: 1px solid #000;
+  border-radius: 10px;
+}
+.input-container button {
+  margin-top: 15px;
+  border: #ccc 1px solid;
+  border-radius: 10px;
+  background-color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+.input-container button:hover {
+  background-color: #ccc;
+  transform: translateY(-2px);
+}
+
+.completed {
+  text-decoration: line-through;
+  color: #ccc;
+}
+
+/*# sourceMappingURL=main.css.map */
