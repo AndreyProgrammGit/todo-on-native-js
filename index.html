@@ -4,10 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="css/main.css" />
-    <title>Document</title>
+    <title>Todo list</title>
   </head>
   <body>
-    <div class="main" id="main">
+    <!-- <div id="preloader" class="visible"></div>   -->
+    <div class="main" id="main" style="display: flex; flex-direction: column;">
+      <div id="date" style="text-align: center; margin-top: 5px;">DATE</div>
       <div class="container">
         <div class="list-container">
           <ul class="list"></ul>
@@ -18,7 +20,14 @@
             type="text"
             class="input"
             id="input"
-            placeholder="Введите текст"
+            placeholder="Введите задачу"
+          />
+          <input
+            style="margin-top: 10px;"
+            type="text"
+            class="input-date"
+            id="input-date"
+            placeholder="Введите время HH:MM:SS"
           />
           <button class="btn" id="btn">Добавить задачу</button>
         </div>
@@ -26,5 +35,7 @@
     </div>
 
     <script src="js/index.js"></script>
+    <script src="js/date.js"></script>
+    <script src="js/preloader.js"></script>
   </body>
 </html>

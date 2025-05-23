@@ -1,4 +1,5 @@
 body{
+  position: relative;
   background-color: rgba(144, 190, 186, 1);
 }
 
@@ -23,10 +24,18 @@ body{
   padding: 0;
 
   .list-item {
+    min-width: 500px;
     margin: 10px 0;
     border-radius: 10px;  
     background-color: #fff;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.507);
+
+    .date{
+      width: auto;
+      height: 100%;
+      font-size: 20px;
+      padding: 0 0 0 20px;
+    }
 
     .item{
       width: 100%;
@@ -48,6 +57,7 @@ body{
       font-weight: bold;
       color: #000;
       cursor: pointer;
+      transition: background-color 0.3s ease, color 0.3s ease;
 
       &:hover {
         background-color: rgb(124, 8, 8);
@@ -62,6 +72,7 @@ body{
       font-weight: bold;
       color: #000;
       cursor: pointer;
+      transition: background-color 0.3s ease, color 0.3s ease;
 
       &:hover {
         background-color: greenyellow;
@@ -89,6 +100,22 @@ body{
   display: flex;
   flex-direction: column;
   margin-bottom: 50px;
+  border: 2px solid grey;
+  border-radius: 10px;
+  padding: 15px;
+
+  input {
+    padding: 5px;
+    border: 1px solid grey;
+    border-radius: 10px;
+    background-color: #8080803d;
+    color: #000000bd;
+    transition: box-shadow 0.3s ease;
+
+    &:hover {
+      box-shadow: 1px 1px 10px #808080;
+    }
+  }
 
     #clear {
     background-color: rgba(255, 0, 0, 0.211);
@@ -99,7 +126,7 @@ body{
       transform: translateY(-2px);
       background-color: rgba(255, 0, 0, 0.5);
       box-shadow: 1px 1px 10px rgb(255, 8, 49);
-      border: 1px solid #000;
+      border: 1px solid rgba(255, 0, 0, 0.5);
       border-radius: 10px;
     }
   }
@@ -113,6 +140,7 @@ body{
     transition: background-color 0.3s ease, transform 0.3s ease;
 
     &:hover {
+      box-shadow:1px 1px 10px #808080 ;
       background-color: #ccc;
       transform: translateY(-2px);
     }
@@ -122,6 +150,33 @@ body{
 
 .completed {
   text-decoration: line-through;
-  color: #ccc;
+  color: rgb(6, 201, 6);
 }
 
+.expired {
+  text-decoration: line-through;
+  color: rgb(255, 0, 0);
+}
+
+#preloader {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 999;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  background: #fbfbfb url('//cdnjs.cloudflare.com/ajax/libs/file-uploader/3.7.0/processing.gif') no-repeat center center;
+}
+
+.visible {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 2s linear;
+}
+
+.hidden {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s 2s, opacity 2s linear;
+}
