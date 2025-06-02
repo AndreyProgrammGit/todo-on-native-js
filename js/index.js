@@ -1,12 +1,34 @@
 "use strict";
 
+import validator from "./validator.js";
+
 var input = document.querySelector("#input");
 var inputDate = document.querySelector(".input-date")
 var list = document.querySelector(".list");
 var button = document.querySelector("#btn");
 var inputContainer = document.querySelector(".input-container");
+var modal = document.querySelector(".modal");
+var modalClose = document.querySelector(".close");
 
 var idx = localStorage.length;
+
+// var validator = {
+//     validateLength: function (input, maxLength) {
+//         if(input.value.length < maxLength && input.value.length > 3) {
+//             return true;
+//         }
+//     },
+//     validateValue: function(input){
+//         if(input.value) {
+//             return true;
+//         }
+//     },
+//     validateDate: function(inputDate){
+//         if(/^(?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d$/.test(inputDate.value)){
+//             return true;
+//         }
+//     }
+// }
 
 function checkDate() {
     var spanDate = document.querySelectorAll(".date");
@@ -41,21 +63,26 @@ setInterval(() => {
     checkDate();
 }, 1000);
 
+window.editTodo = editTodo;
+window.deleteTodo = deleteTodo;
+window.completeTodo = completeTodo;
+
 // Add event listener to the button
 button.addEventListener("click", function () {
 
-    if(!/^(?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d$/.test(inputDate.value)){
+    if(!validator.validateDate(inputDate)) {
         alert("Please enter a valid time in HH:MM:SS format");
         return;
     }
 
-    if (input.value) {
-        if(input.value.length) {
+    if (validator.validateValue(input)) {
+        if(validator.validateLength(input, 35)) {
             var element = `
                 <li class="list-item" data-key="${++h}" style="display: flex; justify-content: space-between; align-items: center;">
                     <span class="date">${inputDate.value}</span>
                     <span class="item" style="display:flex; align-items:center;">${h}. ${input.value}</span>
                     <button class="delete" id="delete" onclick="deleteTodo(this)">Delete</button>
+                    <button class="edit" id="edit" onclick="editTodo(this)">Edit</button>
                     <button class="complete" id="complete" onclick="completeTodo(this)">Completed</button>
                 </li>
             `;
@@ -130,6 +157,68 @@ function deleteTodo(e) {
         h = 0;
     }
 }
+
+function editTodo(e) {
+    modal.classList.add("active-modal");
+    var item = e.parentElement;
+    var btn = document.querySelector("#edit-modal");
+    var key = item.dataset.key;
+
+    var todo = localStorage.getItem("todo" + key);
+
+    console.log(key);
+
+    btn.addEventListener("click", function () {
+        console.log('btn clicked');
+        var spanDate = item.querySelector(".date");
+        var spanTask = item.querySelector(".item");
+
+        var inputTime = document.querySelector("#input-edit__time");
+        var inputTask = document.querySelector("#input-edit__task");
+
+        if(!validator.validateDate(inputTime)) {
+            if(validator.validateValue(inputTask) && validator.validateLength(inputTask, 35)) {
+                var updateTask = todo.replace(/(<span class="item"[^>]*>)(.*?)(<\/span>)/, `$1 ${key}. ${inputTask.value}$3`);
+                console.log(updateTask);
+                localStorage.setItem("todo" + key, updateTask);
+                spanTask.innerHTML = `${key}. ${inputTask.value}`;
+                inputTask.value = '';
+                inputTime.value = '';
+                return;
+            }
+        }
+
+        if(!validator.validateValue(inputTask)) {
+            if(validator.validateDate(inputTime)) {
+                var updateTime = todo.replace(/(<span class="date">)(\d{2}:\d{2}:\d{2})(<\/span>)/, `$1${inputTime}$3`);
+                localStorage.setItem("todo" + key, updateTime);
+                spanDate.innerHTML = inputTime.value;
+                inputTask.value = '';
+                inputTime.value = '';
+                return;
+            }
+        }
+
+        if(validator.validateDate(inputTime) && validator.validateLength(inputTask, 35) && validator.validateValue(inputTask)) {
+            console.log('all ok');
+            var updateTime = todo.replace(/(<span class="date">)(\d{2}:\d{2}:\d{2})(<\/span>)/, `$1${inputTime}$3`);
+            var updateTask = todo.replace(/(<span class="item"[^>]*>)(.*?)(<\/span>)/, `$1  ${key}. ${inputTask}$3`);
+            localStorage.setItem("todo" + key, updateTime);
+            localStorage.setItem("todo" + key, updateTask);
+
+            spanDate.innerHTML = inputTime.value;
+            spanTask.innerHTML = `${key}. ${inputTask.value}`;
+            inputTask.value = '';
+            inputTime.value = '';
+        }
+    })
+}
+
+function closeModal() {
+    modal.classList.remove("active-modal");
+}
+
+modalClose.addEventListener("click", closeModal)
 
 // Function to mark a todo item as complete
 function completeTodo(e) {
